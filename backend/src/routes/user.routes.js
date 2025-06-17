@@ -11,7 +11,10 @@ router.post('/users/registre', UserController.criar);
 router.post('/users/login', UserController.login);
 
 // Rota protegida - perfil do usuário (precisa de token válido)
-router.get('/users/profile', autenticarToken, UserController.perfil)
+router.get('/users/profile', autenticarToken, UserController.perfil);
+
+//Rota All
+router.get('/users', UserController.listarTodos);
 
 export default router;
 

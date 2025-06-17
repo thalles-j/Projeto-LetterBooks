@@ -108,6 +108,24 @@ const UserController = {
         .json({ erro: "Erro ao buscar perfil", detalhes: err.message });
     }
   },
+  async listarTodos(req, res) {
+    try {
+      const usuarios = await prisma.user.findMany({
+        // Opcional: você pode selecionar só campos que quer expor (ex: excluir senha)
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          // não incluir senha por segurança
+        },
+      });
+      res.status(200).json(usuarios);
+    } catch (error) {
+      console.error("Erro ao buscar usuários:", error);
+      res.status(500).json({ erro: "Erro ao buscar usuários" });
+    }
+  },
 };
 
 export default UserController;
