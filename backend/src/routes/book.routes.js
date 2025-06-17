@@ -1,9 +1,17 @@
 import express from 'express';
-import BookController from '../BookController.js';
-import auth from '../middlewares/auth.js';
+import BookController from '../controllers/BookController.js';
 
-const routes = express.Router();
 
-routes.get('/',)
+const router = express.Router();
 
-export default routes;
+router.get('/book', BookController.listar);
+router.get('/book/:id', BookController.buscarPorId);
+
+
+router.post('/book', BookController.criar);
+router.put('/book', BookController.editar);
+router.delete('/book/:id', BookController.remover)
+
+//router.post('/bulk', BookController.criarVarios)
+
+export default router;

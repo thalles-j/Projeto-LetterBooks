@@ -1,7 +1,11 @@
 import express from 'express';
-import BookController from '../BookController.js';
-import auth from '../middlewares/auth.js';
+import FavoriteController from '../controllers/FavoriteController.js';
+import { autenticarToken} from '../middlewares/auth.middleware.js';
 
-const routes = express.Router();
+const router = express.Router();
 
-export default routes;
+router.post('/', autenticarToken, FavoriteController.adicionar); // qualquer usuário autenticado pode favoritar
+router.get('/', autenticarToken, FavoriteController.listar);
+router.delete('/:id', autenticarToken, FavoriteController.remover);
+
+export default router;
