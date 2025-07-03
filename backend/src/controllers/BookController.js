@@ -47,7 +47,7 @@ class BookController {
 
   try {
     const livro = await prisma.book.create({
-      data: { title, author, rating },
+      data: { title, author: author || '', rating: rating || 0 },
     });
     res.status(201).json(livro);
   } catch (err) {
@@ -61,16 +61,16 @@ class BookController {
   async editar(req, res) {
     const { id } = req.params;
     const { title, author, rating } = req.body;
-    if (!title || !author || rating == null) {
+    if (!title) {
       return res.status(400).json({
-        erro: "Campos obrigatórios ausentes. Envie título, author e nota.",
+        erro: "Campo obrigatório ausente. Envie o título.",
       });
     }
 
     try {
       const livro = await prisma.book.update({
         where: { id: Number(id) },
-        data: { title, author, rating },
+        data: { title, author: author || '', rating: rating || 0 },
       });
       res.json(livro);
     } catch (err) {
